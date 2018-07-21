@@ -81,10 +81,12 @@
     // test if a specific row on this board contains a conflict
 
     hasRowConflictAt: function (rowIndex) {
+
       var row = this.get(rowIndex);
       var count = 0;
 
       //not working with forEach??
+      //console.logs not working?- run in snippet
       for (var i = 0; i < row.length; i++) {
         count += row[i];
       }
@@ -112,7 +114,7 @@
       var matrix = this.rows();
       var count = 0;
 
-    
+      //console.logs not working 
       for (var i = 0; i < matrix.length; i++) {
         count += matrix[i][colIndex];
       }
