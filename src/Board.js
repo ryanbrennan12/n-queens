@@ -83,6 +83,8 @@
     hasRowConflictAt: function (rowIndex) {
       var row = this.get(rowIndex);
       var count = 0;
+
+      //not working with forEach??
       for (var i = 0; i < row.length; i++) {
         count += row[i];
       }
@@ -109,6 +111,8 @@
     hasColConflictAt: function (colIndex) {
       var matrix = this.rows();
       var count = 0;
+
+    
       for (var i = 0; i < matrix.length; i++) {
         count += matrix[i][colIndex];
       }
