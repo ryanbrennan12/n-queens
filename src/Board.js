@@ -158,8 +158,11 @@
 
         var first = row[majorDiagonalColumnIndexAtFirstRow];
         var next = nextRow[index];
-        counter += first;
-        // var next = nextRow[index];
+
+        if (first ===  1 && i === startingRow) {
+          counter += first;
+        }
+        
         if (next === undefined) {
           next = 0;
         }
