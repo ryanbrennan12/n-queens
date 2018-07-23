@@ -191,13 +191,47 @@
     // --------------------------------------------------------------
     //
     // test if a specific minor diagonal on this board contains a conflict
-    hasMinorDiagonalConflictAt: function (minorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+    hasMinorDiagonalConflictAt: function (minorDiagonalColumnIndexAtFirstRow, startingRow) {
+      var matrix = this.rows();
+      var counter = 0;
+      // initialize index to represent moving index
+      var index = minorDiagonalColumnIndexAtFirstRow - 1; //next
+      // loop through matrix
+
+      if (!startingRow) {
+        startingRow = 0;
+      }
+      for (var i = startingRow; i < matrix.length - 1; i++) {
+        var row = matrix[i]; ///[1,0,0]
+        var nextRow = matrix[i + 1];//[0,0,0]
+
+        var first = row[minorDiagonalColumnIndexAtFirstRow];
+        var next = nextRow[index];
+
+        if (first ===  1 && i === startingRow) {
+          counter += first;
+        }
+        
+        if (next === undefined) {
+          next = 0;
+        }
+        counter += next;
+        index--;
+      }
+      return counter > 1;
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function () {
-      return false; // fixme
+      var numRows = this.get('n');
+      for (var i = 0; i < numRows; i++) {
+        for (var j = 0; j < numRows - 1; j++) {
+          if (this.hasMinorDiagonalConflictAt(j, i)) { 
+            return true;
+          }
+        }
+      }
+      return false; // 
     }
 
     /*--------------------  End of Helper Functions  ---------------------*/
