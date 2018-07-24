@@ -25,8 +25,12 @@ window.findNRooksSolution = function(n) {
   for (var row in board.attributes) {
     if (Array.isArray(board.attributes[row])) {
       board.attributes[row].forEach(function(square, column) {
-        if (!board.hasRowConflictAt(row) && !board.hasColConflictAt(column)) {
+        if (!board.hasRowConflictAt(row) &&
+            !board.hasColConflictAt(column) &&
+            !board.hasAnyRooksConflicts()) {
+          
           board.togglePiece(row, column);
+
         }
       });
       solution.push(board.attributes[row]);
