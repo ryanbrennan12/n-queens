@@ -67,32 +67,48 @@ window.countNRooksSolutions = function (n) {
 
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n queens placed such that none of them can attack each other
 window.findNQueensSolution = function (n) {
+  // empty container array for solution
+  var solution = [];
+  // starting state of board
   var board = new Board({ n: n });
-  var solution = board.rows();
+  // start at 0, but increment later to test diff combos
+  //  * move the starting square (column index)
+  var startingAtRow = 0;
 
-  // for (var i = 0; i < solution.length; i++) {
-  //   var row = solution[i];
-
-  var queens = function (combos) {
-    //base case
-    if (combos === n) {
-      return;
-    }
-    for (var j = 0; j < solution.length; j++) {
-      board.togglePiece(combos, j);
-      if (board.hasAnyQueensConflicts()) {
-        queens(combos + 1);
+  // recursive function to loop board, find solution
+  //   and base case
+  var putQueens = function (board, row) {
+    // base case
+    if (row === n) {
+      return solution;
+    } else {
+      // loop thru board, toggle, test, repeat recursively
+      for (var column = 0; column < n; column++) {
+        // toggle (row, column)
+        board.togglePiece(row, column);
+        // if no conflicts, keep checking
+        if (!board.hasAnyQueensConflicts()) {
+          solution = board.rows();
+          var boardWithQueens = putQueens(board, row + 1);
+          // do we have a solution?
+          if (boardWithQueens) {
+            // if so, escape inception
+            return solution;
+          }
+          board.togglePiece(row, column);
+        } else {
+          board.togglePiece(row, column);
+        }
       }
-      board.togglePiece(combos, j);
     }
   };
-  // check for empty row
-  if (!row.includes(1)) {
-    queens(0);
-  }
+
+  // get started
+  putQueens(board, startingAtRow);
 
   console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
-  // return solution;
+  // return board w Queens that passed helpers
+  return solution;
 };
 
 // return the number of nxn chessboards that exist, with n queens placed such that none of them can attack each other
