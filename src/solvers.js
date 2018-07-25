@@ -116,7 +116,7 @@ window.countNQueensSolutions = function (n) {
   var solutionCount = 0; //fixme
   var board = new Board({ n: n });
   // function(combos)
-  var putRooks = function (combos) {
+  var putQueens = function (combos) {
     // if combos === n
     if (combos === n) {
       // increment solutionCount
@@ -129,12 +129,12 @@ window.countNQueensSolutions = function (n) {
       board.togglePiece(combos, i);
       // check anyROok conflicts
       if (!board.hasAnyQueensConflicts()) {
-        putRooks(combos + 1);
+        putQueens(combos + 1);
       }
       board.togglePiece(combos, i);
     }
   };
-  putRooks(0);
+  putQueens(0);
 
   console.log('Number of solutions for ' + n + ' queens:', solutionCount);
   return solutionCount;
