@@ -41,26 +41,24 @@ window.countNRooksSolutions = function (n) {
   var solutionCount = 0; //fixme
   var board = new Board({ n: n });
   // function(combos)
-  var putRooks = function (combos) {
-    // if combos === n
-    if (combos === n) {
-      // increment solutionCount
-      solutionCount++;
+  var looper = function(row) { ///this will mean we are one past the edge of the board;
+    if (n === row) {
+      solutionCount ++;
+      //gets incremented because we have exited the board and completed another solution
       return;
     }
-    // for loop
     for (var i = 0; i < n; i++) {
       // togglepiece(combos, i)
-      board.togglePiece(combos, i);
+      board.togglePiece(row, i);
       // check anyROok conflicts
       if (!board.hasAnyRooksConflicts()) {
-        putRooks(combos + 1);
+        looper(row + 1);
       }
-      board.togglePiece(combos, i);
+      board.togglePiece(row, i);
     }
-  };
-  putRooks(0);
 
+  }
+  looper(0);
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   return solutionCount;
 };
